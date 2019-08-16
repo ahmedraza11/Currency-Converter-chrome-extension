@@ -1,6 +1,6 @@
-<h1 align="center"> USD to TRY Currency Converter - Chrome Extension </h1>
+<h1 align="center"> USD to PKR Currency Converter - Chrome Extension </h1>
 
-<p align="center"> The easy way of converting currency at this time! 😋</p>
+<p align="center"> The easy way of converting currency at this time!</p>
 
 <p align="center"> Chrome Extension - Select a currency and click the extension.</p>
 <p align="center"><img align="center" src="https://media.giphy.com/media/7NDDMjrEbsF80KllJB/giphy.gif"/></p>
@@ -19,8 +19,8 @@ You should select currency with USD symbol then just click the extension icon or
 
 ## For questions
 
-[Repo](https://github.com/ue/chrome-currency-converter-extension)
+<!-- [Repo](https://github.com/ue/chrome-currency-converter-extension) -->
 
 ## License
 
-MIT © [UE](https://github.com/ue)
+MIT © [UE](https://github.com/ahmedraza11)

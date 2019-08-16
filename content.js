@@ -10,11 +10,11 @@ if (range) {
 
 if (
   (selectedText.length > 1 && selectedText.includes('$')) ||
-  selectedText.includes('₺') ||
-  selectedText.includes('TL')
+  selectedText.includes('RS') ||
+  selectedText.includes('Rs') ||
+  selectedText.includes('rs') 
 ) {
   var result = decideCalculate(selectedText);
-
   chrome.runtime.sendMessage({
     title: document.title,
     url: window.location.href,
@@ -27,8 +27,13 @@ if (
 }
 
 function seperateSelectedText(selectedText) {
+  var seperateFromMoneyIcon
   var isBlock = selectedText.includes('<');
-  var seperateFromMoneyIcon = selectedText.split('$');
+  if (selectedText.includes('$')) {
+    seperateFromMoneyIcon = selectedText.split('$');
+  } else {
+    seperateFromMoneyIcon = selectedText.toLowerCase().split('rs');
+  }
   return isBlock
     ? seperateFromMoneyIcon[1].split('</')[0]
     : seperateFromMoneyIcon[1];
@@ -37,31 +42,30 @@ function seperateSelectedText(selectedText) {
 function decideCalculate(selectedText) {
   var pureSelectedCurrenct = seperateSelectedText(selectedText);
   var _currencyValue = getCurrencyValueFromApi();
-  var res;
 
   if (selectedText.includes('$')) {
-    return (_currencyValue * pureSelectedCurrenct).toFixed(2) + '₺';
-  } else if (selectedText.includes('TL') || selectedText.includes('₺')) {
-    return (pureSelectedCurrenct / _currencyValue).toFixed(2) + '$';
+    return 'Rs ' + (_currencyValue * pureSelectedCurrenct).toFixed(2);
+  } else if (selectedText.includes('RS') || selectedText.includes('Rs') || selectedText.includes('rs')) {
+    return '$ ' + (pureSelectedCurrenct / _currencyValue).toFixed(2);
   }
 }
+
 
 function getCurrencyValueFromApi() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open(
     'GET',
-    'https://free.currencyconverterapi.com/api/v5/convert?q=USD_TRY&compact=y',
+    'https://free.currconv.com/api/v7/convert?q=USD_PKR&compact=ultra&apiKey=71cf1dac7a4000ee9970',
     true
   );
 
-  xmlhttp.onreadystatechange = function() {
+  xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4) {
       if (xmlhttp.status == 200) {
-        value = JSON.parse(xmlhttp.responseText).USD_TRY.val;
+        value = JSON.parse(xmlhttp.responseText).USD_PKR;
       }
     }
   };
-
   xmlhttp.send(null);
   return value;
 }
